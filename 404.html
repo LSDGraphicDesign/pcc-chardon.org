@@ -3,55 +3,351 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page Not Found - Pilgrim Christian Church</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <title>404 – Page Not Found | Pilgrim Christian Church</title>
+
+  <!-- Premium font pairing (matches your new index vibe) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: "Work Sans", sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+    :root{
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: rgba(15, 23, 42, 0.12);
+      --accent: #3b82f6;
+      --accent2: #22c55e;
+      --shadow: 0 24px 80px rgba(0,0,0,0.20);
+      --radius: 22px;
+      --max: 1040px;
     }
-    .container {
-      margin-top: 10vh;
-      padding: 2rem;
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(1200px 600px at 70% 25%, rgba(59,130,246,0.18), transparent 60%),
+        radial-gradient(900px 500px at 30% 75%, rgba(34,197,94,0.14), transparent 60%),
+        #f8fafc;
     }
-    h1 {
-      font-size: 3rem;
-      color: #990000;
+
+    a { color: inherit; text-decoration: none; }
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
     }
-    p {
-      font-size: 1.2rem;
-      color: #333;
+
+    /* Background hero image with overlay */
+    .bg{
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(180deg, rgba(2,6,23,0.72), rgba(2,6,23,0.62)),
+        url('hero.jpg') center/cover no-repeat;
+      filter: saturate(1.02);
     }
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #990000;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background-color 0.2s ease;
+    .bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 500px at 65% 30%, rgba(59,130,246,0.25), transparent 60%),
+        radial-gradient(900px 500px at 30% 75%, rgba(34,197,94,0.18), transparent 60%);
+      pointer-events:none;
     }
-    a:hover {
-      background-color: #770000;
+
+    /* Top mini bar */
+    .top{
+      padding: 18px 0;
     }
-    .cross-icon {
-      font-size: 5rem;
-      color: #990000;
-      margin-bottom: 1rem;
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(2,6,23,0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+      color: rgba(255,255,255,0.92);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 230px;
+    }
+    .mark{
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      font-weight: 800;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.85), rgba(34,197,94,0.55));
+      box-shadow: 0 16px 45px rgba(59,130,246,0.22);
+    }
+    .brand strong{
+      display:block;
+      font-family: Fraunces, serif;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      font-size: 1.02rem;
+    }
+    .brand span{
+      display:block;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.70);
+      margin-top: 2px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.92);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.26);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(34,197,94,0.85));
+      box-shadow: 0 18px 45px rgba(59,130,246,0.22);
+    }
+
+    /* Main 404 card */
+    .wrap{
+      min-height: calc(100vh - 86px);
+      display:grid;
+      place-items:center;
+      padding: 20px 0 60px;
+    }
+
+    .card{
+      width: 100%;
+      max-width: 920px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .card-inner{
+      display:grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 0;
+    }
+
+    .content{
+      padding: 34px 30px 28px;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(2,6,23,0.25);
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.86);
+    }
+    .dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: rgba(59,130,246,0.95);
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.18);
+    }
+
+    h1{
+      font-family: Fraunces, serif;
+      font-size: clamp(2.1rem, 3.2vw, 3rem);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin: 14px 0 10px;
+      text-shadow: 0 18px 60px rgba(0,0,0,0.45);
+    }
+
+    .lead{
+      color: rgba(255,255,255,0.86);
+      font-size: 1.05rem;
+      max-width: 60ch;
+      margin-bottom: 18px;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .quick{
+      padding: 34px 24px 28px;
+      border-left: 1px solid rgba(255,255,255,0.14);
+      background: rgba(2,6,23,0.22);
+    }
+    .quick h2{
+      font-family: Fraunces, serif;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.92);
+    }
+    .links{
+      display:grid;
+      gap: 10px;
+    }
+    .link{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      transition: transform .18s ease, background .18s ease;
+      color: rgba(255,255,255,0.90);
+      font-weight: 650;
+    }
+    .link:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.10);
+    }
+    .icon{
+      width: 32px; height: 32px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .fine{
+      margin-top: 16px;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .code{
+      font-weight: 900;
+      font-size: clamp(3.3rem, 5.2vw, 5.4rem);
+      letter-spacing: -0.06em;
+      line-height: 0.9;
+      margin-top: 12px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(59,130,246,0.80), rgba(34,197,94,0.75));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 20px 45px rgba(0,0,0,0.25));
+    }
+
+    /* Mobile */
+    @media (max-width: 900px){
+      .card-inner{ grid-template-columns: 1fr; }
+      .quick{ border-left: none; border-top: 1px solid rgba(255,255,255,0.14); }
+      .brand span{ display:none; }
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="cross-icon">✝️</div>
-    <h1>404 – Page Not Found</h1>
-    <p>Oops! It looks like this page doesn't exist.</p>
-    <p>Let’s get you back to where you belong.</p>
-    <a href="index.html">Return to Home</a>
+  <div class="bg" aria-hidden="true"></div>
+
+  <!-- Top mini nav -->
+  <div class="top">
+    <div class="container">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">P</div>
+          <div>
+            <strong>Pilgrim Christian Church</strong>
+            <span>UCC + Disciples of Christ • Chardon, OH</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a class="btn" href="giving.html">Give</a>
+          <a class="btn primary" href="index.html">Back Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="wrap">
+    <div class="container">
+      <div class="card">
+        <div class="card-inner">
+          <div class="content">
+            <div class="kicker"><span class="dot"></span> You’re not lost — just on the wrong page</div>
+            <div class="code">404</div>
+            <h1>Page not found.</h1>
+            <p class="lead">
+              The link may be outdated, or the page was moved. No worries — you’re always welcome here.
+            </p>
+
+            <div class="actions">
+              <a class="btn primary" href="index.html">Return to Home</a>
+              <a class="btn" href="contact.html">Contact Us</a>
+              <a class="btn" href="https://www.youtube.com/@pcc_chardon/streams" target="_blank" rel="noopener">Watch Online</a>
+            </div>
+
+            <p class="fine">
+              If you typed the address manually, double-check the spelling.
+            </p>
+          </div>
+
+          <aside class="quick">
+            <h2>Popular pages</h2>
+            <div class="links">
+              <a class="link" href="food-pantry.html"><span class="icon">🥫</span> Food Pantry</a>
+              <a class="link" href="missions.html"><span class="icon">🌍</span> Missions Ministry</a>
+              <a class="link" href="outreach.html"><span class="icon">🤝</span> Community Outreach</a>
+              <a class="link" href="peacecrane.html"><span class="icon">🕊️</span> Peace Crane Ministry</a>
+              <a class="link" href="music.html"><span class="icon">🎵</span> Music Ministry</a>
+              <a class="link" href="summer.html"><span class="icon">☀️</span> Summer Worship Series</a>
+            </div>
+
+            <p class="fine" style="margin-top:14px;">
+              <strong>Service:</strong> Sundays at 10:00 AM<br>
+              <strong>Address:</strong> 202 S Hambden St, Chardon, OH 44024
+            </p>
+          </aside>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
