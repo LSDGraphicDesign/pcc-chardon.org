@@ -4,240 +4,749 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Summer Worship Series | Pilgrim Christian Church</title>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Premium font pairing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Work Sans', sans-serif;
-      margin: 0;
-      background-color: #fff;
-      color: #333;
+    :root{
+      --accent:#3b82f6;
+      --accent2:#22c55e;
+      --ink:#0f172a;
+      --muted:#475569;
+      --line: rgba(15,23,42,0.10);
+      --shadow2: 0 14px 40px rgba(0,0,0,0.12);
+      --max: 1120px;
     }
 
-    .hero {
-      background-image: url('hero.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 60vh;
+    html{ scroll-behavior:smooth; }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      color: var(--ink);
+      line-height: 1.65;
+      overflow-x:hidden;
+    }
+    a{ color: inherit; }
+
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       Premium Fixed Nav
+    ========================= */
+    .topbar{
+      position: fixed;
+      top:0; left:0; right:0;
+      z-index:999;
+      padding: 14px 0;
+      transition: all .25s ease;
+    }
+    .topbar.scrolled{ padding: 10px 0; }
+
+    .navwrap{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(15, 23, 42, 0.62);
+      color: rgba(255,255,255,0.92);
+      border-radius: 999px;
+      padding: 10px 14px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.22);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:220px;
+    }
+    .brand-mark{
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.85), rgba(34,197,94,0.55));
+      box-shadow: 0 12px 30px rgba(59,130,246,0.22);
+      display:grid;
+      place-items:center;
+      font-weight:800;
+      letter-spacing:-0.02em;
+    }
+    .brand-name{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand-name strong{
+      font-family: Fraunces, serif;
+      font-size: 1.02rem;
+      letter-spacing:-0.02em;
+    }
+    .brand-name span{
+      font-size:0.82rem;
+      color: rgba(255,255,255,0.70);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.92);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight: 750;
+      letter-spacing:-0.01em;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      text-decoration:none;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.26);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(59,130,246,0.98), rgba(34,197,94,0.88));
+      border-color: rgba(255,255,255,0.22);
+      box-shadow: 0 18px 45px rgba(59,130,246,0.22);
+    }
+    .btn.primary:hover{ transform: translateY(-2px); }
+    .btn.dark{ background: rgba(2,6,23,0.45); }
+
+    .dropdown{ position:relative; }
+    .dropdown-panel{
+      position:absolute;
+      top: calc(100% + 12px);
+      left:0;
+      width: min(320px, 88vw);
+      background: rgba(2, 6, 23, 0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      box-shadow: 0 26px 80px rgba(0,0,0,0.45);
+      padding: 10px;
+      display:none;
+      overflow:hidden;
+    }
+    .dropdown-panel.open{
+      display:block;
+      animation: pop .18s ease-out;
+    }
+    @keyframes pop{
+      from{ transform: translateY(-6px); opacity:0; }
+      to{ transform: translateY(0); opacity:1; }
+    }
+    .navgrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .navlink{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      text-decoration:none;
+      color: rgba(255,255,255,0.90);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid transparent;
+      transition: background .18s ease, transform .18s ease, border-color .18s ease;
+      font-weight:650;
+      letter-spacing:-0.01em;
+      font-size:0.95rem;
+    }
+    .navlink:hover{
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.14);
+      transform: translateY(-1px);
+    }
+    .navicon{
+      width:30px; height:30px;
+      border-radius:10px;
+      background: rgba(255,255,255,0.10);
+      display:grid;
+      place-items:center;
+      font-weight:800;
+    }
+
+    .logo-links{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .logo-links img{
+      height:30px;
+      opacity:0.92;
+      transition: transform .18s ease, opacity .18s ease;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
+    }
+    .logo-links img:hover{
+      transform: translateY(-2px) scale(1.03);
+      opacity: 1;
+    }
+
+    /* =========================
+       Hero
+    ========================= */
+    .hero{
+      min-height: 62vh;
+      padding: 120px 0 64px;
+      position:relative;
+      color:white;
+      display:grid;
+      place-items:end center;
+      background:
+        radial-gradient(1000px 520px at 60% 35%, rgba(59,130,246,0.14), transparent 60%),
+        radial-gradient(900px 520px at 28% 70%, rgba(34,197,94,0.10), transparent 60%),
+        linear-gradient(180deg, rgba(2,6,23,0.40), rgba(2,6,23,0.62)),
+        url('hero.jpg') center/cover no-repeat;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(2,6,23,0.22), rgba(2,6,23,0.55));
+      pointer-events:none;
+    }
+    .hero-inner{
+      position:relative;
+      z-index:2;
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .hero h1{
+      font-family: Fraunces, serif;
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      letter-spacing:-0.03em;
+      line-height:1.05;
+      margin-bottom: 10px;
+      text-shadow: 0 18px 60px rgba(0,0,0,0.42);
+    }
+    .hero p{
+      color: rgba(255,255,255,0.86);
+      max-width: 80ch;
+      font-size: 1.05rem;
+    }
+
+    /* =========================
+       Content
+    ========================= */
+    .main{ padding: 64px 0 84px; }
+
+    .panel{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.92);
+      border-radius: 22px;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .panel-pad{ padding: 22px; }
+
+    .kicker{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 750;
+      letter-spacing:-0.01em;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    .kicker .line{
+      width: 42px; height: 1px;
+      background: rgba(15,23,42,0.18);
+    }
+
+    h2{
+      font-family: Fraunces, serif;
+      font-size: clamp(1.7rem, 2.4vw, 2.25rem);
+      letter-spacing:-0.03em;
+      line-height:1.15;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+    .lead{
+      color:#334155;
+      font-size:1.02rem;
+      max-width: 85ch;
+    }
+
+    .at-a-glance{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .tile{
+      background: white;
+      border: 1px solid rgba(15,23,42,0.10);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 12px 28px rgba(15,23,42,0.07);
+    }
+    .tile .ico{
+      width: 42px; height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.16), rgba(34,197,94,0.12));
+      border: 1px solid rgba(15,23,42,0.10);
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .tile strong{
+      display:block;
+      font-weight: 900;
+      letter-spacing:-0.01em;
+      margin-bottom: 6px;
+    }
+    .tile p{
+      color:#475569;
+      font-weight: 600;
+      margin:0;
+      font-size:0.98rem;
+    }
+
+    .cards{
+      display:grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .card{
+      display:grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 18px;
+      align-items:stretch;
+      border-radius: 22px;
+      overflow:hidden;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 18px 55px rgba(0,0,0,0.10);
+    }
+    .card:nth-child(even){
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+    .card-media{
+      position:relative;
+      min-height: 280px;
+    }
+    .card-media img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
+    }
+    .card-body{
+      padding: 20px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap: 10px;
+    }
+    .card-body h3{
+      font-family: Fraunces, serif;
+      font-size: 1.45rem;
+      letter-spacing:-0.02em;
+      margin:0;
+    }
+    .card-body p{
+      color:#475569;
+      font-weight:600;
+      margin:0;
+    }
+
+    .pillrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .pill{
+      font-weight: 850;
+      font-size: 0.85rem;
+      color: #0f172a;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: rgba(59,130,246,0.08);
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+    .pill.alt{ background: rgba(34,197,94,0.10); }
+
+    .btnrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+      margin-top: 12px;
+      align-items:center;
+    }
+    .btn-light{
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: 850;
+      border: 1px solid rgba(15,23,42,0.12);
+      background: white;
+      color: #0f172a;
+      box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn-light:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.12);
+    }
+    .btn-accent{
+      background: linear-gradient(135deg, rgba(59,130,246,0.98), rgba(34,197,94,0.88));
       color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+      border: 1px solid rgba(255,255,255,0.20);
+    }
+
+    /* =========================
+       Footer
+    ========================= */
+    footer{
+      background: #0b1220;
+      color: rgba(255,255,255,0.86);
+      padding: 56px 0 40px;
       position: relative;
+      overflow:hidden;
+    }
+    footer::before{
+      content:"";
+      position:absolute;
+      inset:-200px -200px auto -200px;
+      height: 380px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(59,130,246,0.22), transparent 60%),
+        radial-gradient(circle at 70% 30%, rgba(34,197,94,0.16), transparent 60%);
+      pointer-events:none;
+    }
+    .footer-grid{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 26px;
+      align-items:start;
+    }
+    .footer-title{
+      font-family: Fraunces, serif;
+      font-size: 1.3rem;
+      letter-spacing:-0.02em;
+      margin-bottom: 10px;
+      color: rgba(255,255,255,0.92);
+    }
+    .footer p, .footer a{
+      color: rgba(255,255,255,0.74);
+      font-size: 0.98rem;
+      text-decoration:none;
+    }
+    .footer a:hover{ color: rgba(255,255,255,0.92); text-decoration:underline; }
+    .footer-links{ display:grid; gap: 10px; margin-top: 10px; }
+
+    .footer-bottom{
+      position:relative;
+      z-index:2;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      display:flex;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap:wrap;
+      align-items:center;
+      color: rgba(255,255,255,0.62);
+      font-size: 0.92rem;
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.6);
+    /* Reveal */
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show{ opacity:1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 1040px){
+      .at-a-glance{ grid-template-columns: 1fr; }
+      .card, .card:nth-child(even){ grid-template-columns: 1fr; }
+      .card-media{ min-height: 240px; }
+      .footer-grid{ grid-template-columns: 1fr; }
     }
-
-    .hero h1 {
-      position: relative;
-      z-index: 1;
-      font-size: 3rem;
-    }
-
-    .nav-container {
-      background: #f9f9f9;
-      padding: 1rem 2rem;
-    }
-
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .dropdown-btn {
-      background: none;
-      border: none;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 0.5rem 1rem;
-      color: #333;
-      text-decoration: none;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #f0f0f0;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem;
-    }
-
-    .section {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .section:nth-of-type(even) {
-      flex-direction: row-reverse;
-    }
-
-    .section img {
-      width: 400px;
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .section-content {
-      flex: 1;
-    }
-
-    .section h3 {
-      margin-top: 0;
-      color: #005a87;
-    }
-
-    .back-home {
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    .back-home a {
-      text-decoration: none;
-      background: #005a87;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-    }
-
-    .socials a {
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .socials img {
-      width: 24px;
-      margin: 0 10px;
-    }
-
-    @media (max-width: 768px) {
-      .section {
-        flex-direction: column !important;
-        text-align: center;
-      }
-
-      .section img {
-        width: 100%;
-      }
-
-      .section-content {
-        width: 100%;
-      }
+    @media (max-width: 760px){
+      .logo-links{ display:none; }
+      .brand-name span{ display:none; }
+      .main{ padding: 44px 0 70px; }
+      .hero{ min-height: 56vh; }
     }
   </style>
 </head>
+
 <body>
-  <div class="hero">
-    <h1>Summer Worship Series</h1>
-  </div>
 
-  <div class="nav-container">
-    <div class="dropdown">
-      <button class="dropdown-btn">Menu ☰</button>
-      <div class="dropdown-content">
-        <a href="index.html">Home</a>
-        <a href="food-pantry.html">Food Pantry</a>
-        <a href="peacecrane.html">Peace Crane Ministry</a>
-        <a href="music.html">Music Ministry</a>
-        <a href="childrens.html">Children’s Education</a>
-        <a href="volunteers.html">Worship Volunteers</a>
-        <a href="outreach.html">Community Outreach</a>
-        <a href="missions.html">Missions Ministry</a>
-        <a href="summer.html">Summer Worship Series</a>
-        <a href="giving.html">Giving</a>
-        <a href="contact.html">Contact</a>
+  <!-- Premium Nav -->
+  <div class="topbar" id="topbar">
+    <div class="container">
+      <div class="navwrap">
+        <div class="brand">
+          <div class="brand-mark">P</div>
+          <div class="brand-name">
+            <strong>Pilgrim Christian Church</strong>
+            <span>UCC + Disciples of Christ</span>
+          </div>
+        </div>
+
+        <div class="nav-actions">
+          <div class="dropdown">
+            <button class="btn dark" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">☰ Menu</button>
+
+            <div class="dropdown-panel" id="menuPanel" role="menu" aria-label="Site menu">
+              <div class="navgrid">
+                <a class="navlink" href="index.html"><span class="navicon">🏠</span>Home</a>
+                <a class="navlink" href="contact.html"><span class="navicon">📍</span>Contact</a>
+                <a class="navlink" href="giving.html"><span class="navicon">💛</span>Giving</a>
+                <a class="navlink" href="summer.html"><span class="navicon">☀️</span>Summer Series</a>
+
+                <a class="navlink" href="food-pantry.html"><span class="navicon">🥫</span>Food Pantry</a>
+                <a class="navlink" href="peacecrane.html"><span class="navicon">🕊️</span>Peace Cranes</a>
+                <a class="navlink" href="music.html"><span class="navicon">🎵</span>Music</a>
+                <a class="navlink" href="childrens.html"><span class="navicon">📚</span>Children’s</a>
+
+                <a class="navlink" href="volunteers.html"><span class="navicon">🙌</span>Volunteers</a>
+                <a class="navlink" href="outreach.html"><span class="navicon">🤝</span>Outreach</a>
+                <a class="navlink" href="missions.html"><span class="navicon">🌍</span>Missions</a>
+                <a class="navlink" href="index.html#worship"><span class="navicon">⛪</span>Worship</a>
+              </div>
+            </div>
+          </div>
+
+          <a class="btn primary" href="contact.html">Plan a Visit</a>
+
+          <div class="logo-links">
+            <a href="https://www.ucc.org/" target="_blank" rel="noopener">
+              <img src="ucc-icon2.png" alt="United Church of Christ">
+            </a>
+            <a href="https://disciples.org/" target="_blank" rel="noopener">
+              <img src="doc-icon.png" alt="Christian Church (Disciples of Christ)">
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    <div class="section">
-      <img src="polka.jpg" alt="Polka Sunday">
-      <div class="section-content">
-        <h3>Polka Sunday</h3>
-        <p>Polka Sunday is a special service held each summer at Big Creek Park, with joyful music provided by the world-famous Chardon Polka Band. Join us for worship outdoors with dancing, music, and laughter!</p>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner reveal">
+      <h1>Summer Worship Series</h1>
+      <p>
+        Outdoor worship, community, and summer traditions — come as you are and enjoy the season with PCC.
+      </p>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <section class="panel reveal">
+        <div class="panel-pad">
+          <div class="kicker"><span class="line"></span> Summer at PCC</div>
+          <h2>Three favorites that bring the community together.</h2>
+          <p class="lead">
+            Each summer we share special worship experiences beyond our sanctuary — with music, nature, and fellowship.
+            If it’s your first time, you’ll fit right in.
+          </p>
+
+          <div class="at-a-glance" aria-label="Quick highlights">
+            <div class="tile">
+              <div class="ico">🎺</div>
+              <strong>Music + Joy</strong>
+              <p>From polka to hymns, worship feels alive and welcoming.</p>
+            </div>
+            <div class="tile">
+              <div class="ico">🌿</div>
+              <strong>Outdoors</strong>
+              <p>Relaxed worship in beautiful spaces around the community.</p>
+            </div>
+            <div class="tile">
+              <div class="ico">🍉</div>
+              <strong>Fellowship</strong>
+              <p>Food, laughter, and connections that feel like family.</p>
+            </div>
+          </div>
+
+          <div class="btnrow" style="margin-top:16px;">
+            <a class="btn-light btn-accent" href="contact.html">Ask for Details</a>
+            <a class="btn-light" href="index.html#worship">Regular Sunday Worship</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="cards">
+
+        <!-- Polka Sunday -->
+        <article class="card reveal">
+          <div class="card-media">
+            <img src="polka.jpg" alt="Polka Sunday">
+          </div>
+          <div class="card-body">
+            <h3>Polka Sunday</h3>
+            <p>
+              Polka Sunday is a special service held each summer at Big Creek Park, with joyful music provided by the world-famous
+              Chardon Polka Band. Join us for worship outdoors with dancing, music, and laughter!
+            </p>
+            <div class="pillrow">
+              <span class="pill">Big Creek Park</span>
+              <span class="pill alt">Outdoor Worship</span>
+              <span class="pill">Live Music</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Mountain Run Station -->
+        <article class="card reveal">
+          <div class="card-body">
+            <h3>Mountain Run Station Worship</h3>
+            <p>
+              Enjoy a relaxed outdoor worship experience at the scenic Mountain Run Station. This service brings together nature,
+              scripture, and community.
+            </p>
+            <div class="pillrow">
+              <span class="pill">Mountain Run Station</span>
+              <span class="pill alt">Nature + Scripture</span>
+              <span class="pill">Community</span>
+            </div>
+          </div>
+          <div class="card-media">
+            <img src="mountain.jpg" alt="Mountain Run Station">
+          </div>
+        </article>
+
+        <!-- Church Picnic -->
+        <article class="card reveal">
+          <div class="card-media">
+            <img src="picnic.jpg" alt="Church Picnic">
+          </div>
+          <div class="card-body">
+            <h3>Church Picnic</h3>
+            <p>
+              Our church picnic features great food, fellowship, and games for all ages. It’s a time to celebrate summer and deepen
+              our church family bonds.
+            </p>
+            <div class="pillrow">
+              <span class="pill">Food + Games</span>
+              <span class="pill alt">All Ages</span>
+              <span class="pill">Fellowship</span>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">Pilgrim Christian Church</div>
+          <p>
+            A partnership of the United Church of Christ and the Christian Church (Disciples of Christ).
+            <br><br>
+            Serving Chardon with faith, hope, and love.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-title">Quick Links</div>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="giving.html">Giving</a>
+            <a href="missions.html">Missions</a>
+            <a href="outreach.html">Community Outreach</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-title">Worship Online</div>
+          <div class="footer-links">
+            <a href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank" rel="noopener">Facebook Videos</a>
+            <a href="https://www.youtube.com/@pcc_chardon/streams" target="_blank" rel="noopener">YouTube Streams</a>
+            <div style="display:flex; gap:14px; align-items:center; margin-top: 14px;">
+              <a href="https://www.ucc.org/" target="_blank" rel="noopener">
+                <img src="ucc-icon2.png" alt="UCC Logo" style="height:38px; opacity:.9;">
+              </a>
+              <a href="https://disciples.org/" target="_blank" rel="noopener">
+                <img src="doc-icon.png" alt="DoC Logo" style="height:38px; opacity:.9;">
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="section">
-      <img src="mountain.jpg" alt="Mountain Run Station">
-      <div class="section-content">
-        <h3>Mountain Run Station Worship</h3>
-        <p>Enjoy a relaxed outdoor worship experience at the scenic Mountain Run Station. This service brings together nature, scripture, and community.</p>
+      <div class="footer-bottom">
+        <span>&copy; 2025 Pilgrim Christian Church</span>
+        <span>See you this summer ☀️</span>
       </div>
-    </div>
-
-    <div class="section">
-      <img src="picnic.jpg" alt="Church Picnic">
-      <div class="section-content">
-        <h3>Church Picnic</h3>
-        <p>Our church picnic features great food, fellowship, and games for all ages. It’s a time to celebrate summer and deepen our church family bonds.</p>
-      </div>
-    </div>
-
-    <div class="back-home">
-      <a href="index.html">Return to Home</a>
-    </div>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Pilgrim Christian Church</p>
-    <div class="socials" style="margin-top: 1rem; text-align: center;">
-      <a href="https://www.instagram.com/pcc_chardon/" target="_blank">
-        <img src="instagram-icon.png" alt="Instagram">
-      </a>
-      <a href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank">
-        <img src="facebook-icon.png" alt="Facebook">
-      </a>
-      <a href="https://www.youtube.com/@pcc_chardon/streams" target="_blank">
-        <img src="youtube-icon.png" alt="YouTube">
-      </a>
-    </div>
-    <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem;">
-      <a href="https://www.ucc.org/" target="_blank">
-        <img src="ucc-icon2.png" alt="UCC Logo" style="height: 40px;">
-      </a>
-      <a href="https://disciples.org/" target="_blank">
-        <img src="doc-icon.png" alt="DoC Logo" style="height: 40px;">
-      </a>
     </div>
   </footer>
+
+  <script>
+    // Sticky nav shrink
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 18) topbar.classList.add('scrolled');
+      else topbar.classList.remove('scrolled');
+    });
+
+    // Menu dropdown (click-based)
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPanel = document.getElementById('menuPanel');
+    function closeMenu(){
+      menuPanel.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = menuPanel.classList.contains('open');
+      if (isOpen) closeMenu();
+      else {
+        menuPanel.classList.add('open');
+        menuBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+    document.addEventListener('click', () => closeMenu());
+    menuPanel.addEventListener('click', (e) => e.stopPropagation());
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
 </body>
 </html>
