@@ -2,165 +2,766 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Giving | Pilgrim Christian Church</title>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Premium font pairing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Work Sans', sans-serif;
-      background-color: #fff;
-      color: #333;
-      margin: 0;
+    :root{
+      --accent:#3b82f6;
+      --accent2:#22c55e;
+      --ink:#0f172a;
+      --muted:#475569;
+      --line: rgba(15,23,42,0.10);
+      --shadow2: 0 14px 40px rgba(0,0,0,0.12);
+      --max: 1120px;
     }
-    header {
-      background-image: url('hero.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 50vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+
+    html{ scroll-behavior:smooth; }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      color: var(--ink);
+      line-height: 1.65;
+      overflow-x:hidden;
+    }
+    a{ color: inherit; }
+
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       Premium Fixed Nav
+    ========================= */
+    .topbar{
+      position: fixed;
+      top:0; left:0; right:0;
+      z-index:999;
+      padding: 14px 0;
+      transition: all .25s ease;
+    }
+    .topbar.scrolled{ padding: 10px 0; }
+
+    .navwrap{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(15, 23, 42, 0.62);
+      color: rgba(255,255,255,0.92);
+      border-radius: 999px;
+      padding: 10px 14px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.22);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:220px;
+    }
+    .brand-mark{
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.85), rgba(34,197,94,0.55));
+      box-shadow: 0 12px 30px rgba(59,130,246,0.22);
+      display:grid;
+      place-items:center;
+      font-weight:800;
+      letter-spacing:-0.02em;
+    }
+    .brand-name{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand-name strong{
+      font-family: Fraunces, serif;
+      font-size: 1.02rem;
+      letter-spacing:-0.02em;
+    }
+    .brand-name span{
+      font-size:0.82rem;
+      color: rgba(255,255,255,0.70);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.92);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight: 750;
+      letter-spacing:-0.01em;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      text-decoration:none;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.26);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(59,130,246,0.98), rgba(34,197,94,0.88));
+      border-color: rgba(255,255,255,0.22);
+      box-shadow: 0 18px 45px rgba(59,130,246,0.22);
+    }
+    .btn.primary:hover{ transform: translateY(-2px); }
+    .btn.dark{ background: rgba(2,6,23,0.45); }
+
+    .dropdown{ position:relative; }
+    .dropdown-panel{
+      position:absolute;
+      top: calc(100% + 12px);
+      left:0;
+      width: min(320px, 88vw);
+      background: rgba(2, 6, 23, 0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      box-shadow: 0 26px 80px rgba(0,0,0,0.45);
+      padding: 10px;
+      display:none;
+      overflow:hidden;
+    }
+    .dropdown-panel.open{
+      display:block;
+      animation: pop .18s ease-out;
+    }
+    @keyframes pop{
+      from{ transform: translateY(-6px); opacity:0; }
+      to{ transform: translateY(0); opacity:1; }
+    }
+    .navgrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .navlink{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      text-decoration:none;
+      color: rgba(255,255,255,0.90);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid transparent;
+      transition: background .18s ease, transform .18s ease, border-color .18s ease;
+      font-weight:650;
+      letter-spacing:-0.01em;
+      font-size:0.95rem;
+    }
+    .navlink:hover{
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.14);
+      transform: translateY(-1px);
+    }
+    .navicon{
+      width:30px; height:30px;
+      border-radius:10px;
+      background: rgba(255,255,255,0.10);
+      display:grid;
+      place-items:center;
+      font-weight:800;
+    }
+
+    .logo-links{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .logo-links img{
+      height:30px;
+      opacity:0.92;
+      transition: transform .18s ease, opacity .18s ease;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
+    }
+    .logo-links img:hover{
+      transform: translateY(-2px) scale(1.03);
+      opacity: 1;
+    }
+
+    /* =========================
+       Hero
+    ========================= */
+    .hero{
+      min-height: 62vh;
+      padding: 120px 0 64px;
+      position:relative;
+      color:white;
+      display:grid;
+      place-items:end center;
+      background:
+        radial-gradient(1000px 520px at 60% 35%, rgba(59,130,246,0.14), transparent 60%),
+        radial-gradient(900px 520px at 28% 70%, rgba(34,197,94,0.10), transparent 60%),
+        linear-gradient(180deg, rgba(2,6,23,0.36), rgba(2,6,23,0.62)),
+        url('hero.jpg') center/cover no-repeat;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(2,6,23,0.18), rgba(2,6,23,0.55));
+      pointer-events:none;
+    }
+    .hero-inner{
+      position:relative;
+      z-index:2;
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .hero h1{
+      font-family: Fraunces, serif;
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      letter-spacing:-0.03em;
+      line-height:1.05;
+      margin-bottom: 10px;
+      text-shadow: 0 18px 60px rgba(0,0,0,0.42);
+    }
+    .hero p{
+      color: rgba(255,255,255,0.86);
+      max-width: 80ch;
+      font-size: 1.05rem;
+    }
+
+    /* =========================
+       Page content
+    ========================= */
+    .main{ padding: 64px 0 90px; }
+
+    .panel{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.92);
+      border-radius: 22px;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .panel-pad{ padding: 22px; }
+
+    .kicker{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 750;
+      letter-spacing:-0.01em;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    .kicker .line{
+      width: 42px; height: 1px;
+      background: rgba(15,23,42,0.18);
+    }
+
+    h2{
+      font-family: Fraunces, serif;
+      font-size: clamp(1.7rem, 2.4vw, 2.25rem);
+      letter-spacing:-0.03em;
+      line-height:1.15;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+    .lead{
+      color:#334155;
+      font-size:1.02rem;
+      max-width: 90ch;
+    }
+
+    .give-grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .give-card{
+      background: white;
+      border: 1px solid rgba(15,23,42,0.10);
+      border-radius: 22px;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.10);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .give-card .head{
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+      background:
+        radial-gradient(650px 260px at 20% 10%, rgba(59,130,246,0.12), transparent 60%),
+        radial-gradient(650px 260px at 80% 10%, rgba(34,197,94,0.10), transparent 60%),
+        #ffffff;
+    }
+    .give-card h3{
+      font-family: Fraunces, serif;
+      font-size: 1.35rem;
+      letter-spacing:-0.02em;
+      margin:0 0 6px;
+    }
+    .give-card p{
+      margin:0;
+      color:#475569;
+      font-weight:600;
+    }
+    .give-card .body{
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      justify-content:space-between;
+      height:100%;
+    }
+
+    .pillrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .pill{
+      font-weight: 850;
+      font-size: 0.85rem;
+      color: #0f172a;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: rgba(59,130,246,0.08);
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+    .pill.alt{ background: rgba(34,197,94,0.10); }
+
+    .cta{
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: 900;
+      border: 1px solid rgba(15,23,42,0.12);
+      background: white;
+      color: #0f172a;
+      box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+      transition: transform .18s ease, box-shadow .18s ease;
+      width: fit-content;
+    }
+    .cta:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.12);
+    }
+    .cta.primary{
+      background: linear-gradient(135deg, rgba(59,130,246,0.98), rgba(34,197,94,0.88));
       color: white;
+      border: 1px solid rgba(255,255,255,0.20);
+    }
+
+    .qr{
+      display:grid;
+      place-items:center;
+      padding: 18px;
+      background:
+        radial-gradient(650px 260px at 20% 10%, rgba(34,197,94,0.10), transparent 60%),
+        radial-gradient(650px 260px at 80% 10%, rgba(59,130,246,0.10), transparent 60%),
+        #ffffff;
+    }
+    .qr-frame{
+      width: min(240px, 70vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: white;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.12);
+      display:grid;
+      place-items:center;
+      padding: 14px;
+    }
+    .qr-frame img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display:block;
+      border-radius: 14px;
+    }
+    .qr small{
+      margin-top: 12px;
+      color:#64748b;
+      font-weight: 750;
+      text-align:center;
+      display:block;
+    }
+
+    .other{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .tile{
+      background: white;
+      border: 1px solid rgba(15,23,42,0.10);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 12px 28px rgba(15,23,42,0.07);
+    }
+    .tile .ico{
+      width: 42px; height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.16), rgba(34,197,94,0.12));
+      border: 1px solid rgba(15,23,42,0.10);
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .tile strong{
+      display:block;
+      font-weight: 900;
+      letter-spacing:-0.01em;
+      margin-bottom: 6px;
+    }
+    .tile p{
+      color:#475569;
+      font-weight: 600;
+      margin:0;
+      font-size:0.98rem;
+    }
+
+    /* =========================
+       Footer
+    ========================= */
+    footer{
+      background: #0b1220;
+      color: rgba(255,255,255,0.86);
+      padding: 56px 0 40px;
       position: relative;
+      overflow:hidden;
     }
-    header::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 0;
+    footer::before{
+      content:"";
+      position:absolute;
+      inset:-200px -200px auto -200px;
+      height: 380px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(59,130,246,0.22), transparent 60%),
+        radial-gradient(circle at 70% 30%, rgba(34,197,94,0.16), transparent 60%);
+      pointer-events:none;
     }
-    header h1 {
-      font-size: 3rem;
-      z-index: 1;
-      position: relative;
+    .footer-grid{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 26px;
+      align-items:start;
     }
-    .nav-container {
-      background: #f9f9f9;
-      padding: 1rem 2rem;
+    .footer-title{
+      font-family: Fraunces, serif;
+      font-size: 1.3rem;
+      letter-spacing:-0.02em;
+      margin-bottom: 10px;
+      color: rgba(255,255,255,0.92);
     }
-    .dropdown {
-      position: relative;
-      display: inline-block;
+    .footer p, .footer a{
+      color: rgba(255,255,255,0.74);
+      font-size: 0.98rem;
+      text-decoration:none;
     }
-    .dropdown-btn {
-      background: none;
-      border: none;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
+    .footer a:hover{ color: rgba(255,255,255,0.92); text-decoration:underline; }
+    .footer-links{ display:grid; gap: 10px; margin-top: 10px; }
+
+    .footer-bottom{
+      position:relative;
+      z-index:2;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      display:flex;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap:wrap;
+      align-items:center;
+      color: rgba(255,255,255,0.62);
+      font-size: 0.92rem;
     }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      z-index: 1000;
+
+    /* Reveal */
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show{ opacity:1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 1040px){
+      .give-grid{ grid-template-columns: 1fr; }
+      .other{ grid-template-columns: 1fr; }
+      .footer-grid{ grid-template-columns: 1fr; }
     }
-    .dropdown-content a {
-      display: block;
-      padding: 0.5rem 1rem;
-      color: #333;
-      text-decoration: none;
-    }
-    .dropdown-content a:hover {
-      background-color: #eee;
-    }
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    .section {
-      max-width: 800px;
-      margin: auto;
-      padding: 3rem 1rem;
-      text-align: center;
-    }
-    .section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #005a87;
-    }
-    .section p {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .qr-code {
-      margin: 1rem auto;
-      max-width: 180px;
-    }
-    .donate-link {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.75rem 1.5rem;
-      background-color: #005a87;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    footer {
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 2rem;
-    }
-    .socials img {
-      width: 24px;
-      margin: 0 8px;
+    @media (max-width: 760px){
+      .logo-links{ display:none; }
+      .brand-name span{ display:none; }
+      .main{ padding: 44px 0 70px; }
+      .hero{ min-height: 56vh; }
+      .qr-frame{ width: min(260px, 78vw); }
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>Giving</h1>
-  </header>
 
-  <div class="nav-bar">
-    <div class="dropdown">
-      <button class="dropdown-btn">Menu ☰</button>
-      <div class="dropdown-content">
-        <a href="index.html">Home</a>
-        <a href="food-pantry.html">Food Pantry</a>
-        <a href="peacecrane.html">Peace Crane Ministry</a>
-        <a href="music.html">Music Ministry</a>
-        <a href="childrens.html">Children’s Education</a>
-        <a href="volunteers.html">Worship Volunteers</a>
-        <a href="outreach.html">Community Outreach</a>
-        <a href="missions.html">Missions Ministry</a>
-        <a href="summer.html">Summer Worship Series</a>
-        <a href="giving.html">Giving</a>
-        <a href="contact.html">Contact</a>
+<body>
+
+  <!-- Premium Nav -->
+  <div class="topbar" id="topbar">
+    <div class="container">
+      <div class="navwrap">
+        <div class="brand">
+          <div class="brand-mark">P</div>
+          <div class="brand-name">
+            <strong>Pilgrim Christian Church</strong>
+            <span>UCC + Disciples of Christ</span>
+          </div>
+        </div>
+
+        <div class="nav-actions">
+          <div class="dropdown">
+            <button class="btn dark" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">☰ Menu</button>
+
+            <div class="dropdown-panel" id="menuPanel" role="menu" aria-label="Site menu">
+              <div class="navgrid">
+                <a class="navlink" href="index.html"><span class="navicon">🏠</span>Home</a>
+                <a class="navlink" href="contact.html"><span class="navicon">📍</span>Contact</a>
+                <a class="navlink" href="giving.html"><span class="navicon">💛</span>Giving</a>
+                <a class="navlink" href="summer.html"><span class="navicon">☀️</span>Summer Series</a>
+
+                <a class="navlink" href="food-pantry.html"><span class="navicon">🥫</span>Food Pantry</a>
+                <a class="navlink" href="peacecrane.html"><span class="navicon">🕊️</span>Peace Cranes</a>
+                <a class="navlink" href="music.html"><span class="navicon">🎵</span>Music</a>
+                <a class="navlink" href="childrens.html"><span class="navicon">📚</span>Children’s</a>
+
+                <a class="navlink" href="volunteers.html"><span class="navicon">🙌</span>Volunteers</a>
+                <a class="navlink" href="outreach.html"><span class="navicon">🤝</span>Outreach</a>
+                <a class="navlink" href="missions.html"><span class="navicon">🌍</span>Missions</a>
+                <a class="navlink" href="index.html#worship"><span class="navicon">⛪</span>Worship</a>
+              </div>
+            </div>
+          </div>
+
+          <a class="btn primary" href="https://d6c93ba9.churchtrac.com/give" target="_blank" rel="noopener">Give Now</a>
+
+          <div class="logo-links">
+            <a href="https://www.ucc.org/" target="_blank" rel="noopener">
+              <img src="ucc-icon2.png" alt="United Church of Christ">
+            </a>
+            <a href="https://disciples.org/" target="_blank" rel="noopener">
+              <img src="doc-icon.png" alt="Christian Church (Disciples of Christ)">
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="section">
-    <h2>Support Our Ministry</h2>
-    <p>Your generosity helps us serve our community, maintain our ministries, and share God's love. Thank you for your support!</p>
-    <img src="unnamed.png" alt="Donate QR Code" class="qr-code">
-    <br>
-    <a class="donate-link" href="https://d6c93ba9.churchtrac.com/give" target="_blank">Give Online</a>
-
-    <!-- PayPal Button Section -->
-    <div style="margin-top: 2.5rem;">
-      <p style="font-size: 1rem; margin-bottom: 0.5rem;"><strong>We also accept PayPal.</strong></p>
-      <a class="donate-link" href="https://www.paypal.com/donate/?hosted_button_id=Q223JL69FEYS2" target="_blank">PayPal</a>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner reveal">
+      <h1>Giving</h1>
+      <p>
+        Your generosity supports worship, outreach, community care, and the ministries that serve Chardon.
+        Thank you for being part of the work.
+      </p>
     </div>
-  </div>
+  </header>
 
-  <footer>
-    <p>&copy; 2025 Pilgrim Christian Church</p>
-    <div class="socials">
-      <a href="https://www.instagram.com/pcc_chardon/" target="_blank"><img src="instagram-icon.png" alt="Instagram"></a>
-      <a href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank"><img src="facebook-icon.png" alt="Facebook"></a>
-      <a href="https://www.youtube.com/@pcc_chardon/streams" target="_blank"><img src="youtube-icon.png" alt="YouTube"></a>
+  <main class="main">
+    <div class="container">
+
+      <section class="panel reveal">
+        <div class="panel-pad">
+          <div class="kicker"><span class="line"></span> Support Our Ministry</div>
+          <h2>Give in the way that’s easiest for you.</h2>
+          <p class="lead">
+            Every gift helps us serve neighbors with dignity, maintain ministry spaces, and share God’s love.
+            If you have any questions about giving, please reach out anytime.
+          </p>
+
+          <div class="give-grid">
+
+            <!-- Left: Ways to give -->
+            <div class="give-card">
+              <div class="head">
+                <h3>Online Giving</h3>
+                <p>Fast, secure, and available anytime.</p>
+                <div class="pillrow">
+                  <span class="pill">ChurchTrac</span>
+                  <span class="pill alt">PayPal</span>
+                </div>
+              </div>
+
+              <div class="body">
+                <div>
+                  <p style="color:#475569; font-weight:650;">
+                    Use ChurchTrac for standard giving, or PayPal if you prefer.
+                    Both options open in a new tab.
+                  </p>
+                </div>
+
+                <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:10px;">
+                  <a class="cta primary" href="https://d6c93ba9.churchtrac.com/give" target="_blank" rel="noopener">Give Online (ChurchTrac) →</a>
+                  <a class="cta" href="https://www.paypal.com/donate/?hosted_button_id=Q223JL69FEYS2" target="_blank" rel="noopener">Give with PayPal →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: QR -->
+            <div class="give-card">
+              <div class="head">
+                <h3>Scan to Give</h3>
+                <p>Point your phone camera at the code.</p>
+              </div>
+              <div class="qr">
+                <div class="qr-frame">
+                  <img src="unnamed.png" alt="Donate QR Code">
+                </div>
+                <small>Scan to open the giving page</small>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Other ways -->
+          <div class="other" style="margin-top:18px;">
+            <div class="tile">
+              <div class="ico">✉️</div>
+              <strong>Mail a Check</strong>
+              <p>
+                Pilgrim Christian Church<br>
+                202 S Hambden St<br>
+                Chardon, OH 44024
+              </p>
+            </div>
+            <div class="tile">
+              <div class="ico">⛪</div>
+              <strong>Give In Person</strong>
+              <p>
+                Offerings can be placed during worship on Sundays. Thank you for your support.
+              </p>
+            </div>
+            <div class="tile">
+              <div class="ico">💬</div>
+              <strong>Questions?</strong>
+              <p>
+                Contact us if you need help with giving options or receipts.
+                <br><a href="contact.html" style="font-weight:900; text-decoration:underline;">Go to Contact →</a>
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
     </div>
-    <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem;">
-      <a href="https://www.ucc.org/" target="_blank"><img src="ucc-icon2.png" alt="UCC Logo" style="height: 40px;"></a>
-      <a href="https://disciples.org/" target="_blank"><img src="doc-icon.png" alt="DoC Logo" style="height: 40px;"></a>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">Pilgrim Christian Church</div>
+          <p>
+            A partnership of the United Church of Christ and the Christian Church (Disciples of Christ).
+            <br><br>
+            Thank you for helping us serve with love.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-title">Quick Links</div>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="food-pantry.html">Food Pantry</a>
+            <a href="missions.html">Missions</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-title">Worship Online</div>
+          <div class="footer-links">
+            <a href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank" rel="noopener">Facebook Videos</a>
+            <a href="https://www.youtube.com/@pcc_chardon/streams" target="_blank" rel="noopener">YouTube Streams</a>
+            <div style="display:flex; gap:14px; align-items:center; margin-top: 14px;">
+              <a href="https://www.ucc.org/" target="_blank" rel="noopener">
+                <img src="ucc-icon2.png" alt="UCC Logo" style="height:38px; opacity:.9;">
+              </a>
+              <a href="https://disciples.org/" target="_blank" rel="noopener">
+                <img src="doc-icon.png" alt="DoC Logo" style="height:38px; opacity:.9;">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2025 Pilgrim Christian Church</span>
+        <span>Thank you for giving 💛</span>
+      </div>
     </div>
   </footer>
+
+  <script>
+    // Sticky nav shrink
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 18) topbar.classList.add('scrolled');
+      else topbar.classList.remove('scrolled');
+    });
+
+    // Menu dropdown (click-based)
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPanel = document.getElementById('menuPanel');
+    function closeMenu(){
+      menuPanel.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = menuPanel.classList.contains('open');
+      if (isOpen) closeMenu();
+      else {
+        menuPanel.classList.add('open');
+        menuBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+    document.addEventListener('click', () => closeMenu());
+    menuPanel.addEventListener('click', (e) => e.stopPropagation());
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  </script>
 
 </body>
 </html>
