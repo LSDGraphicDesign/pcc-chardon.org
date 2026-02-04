@@ -4,312 +4,896 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pilgrim Christian Church</title>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Work+Sans:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Premium font pairing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
+    /* =========================
+       Premium Base + Theme
+    ========================= */
+    :root{
+      --bg: #0b1220;
+      --surface: rgba(255,255,255,0.08);
+      --surface-2: rgba(255,255,255,0.12);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --muted-2: rgba(255,255,255,0.58);
+      --line: rgba(255,255,255,0.14);
+
+      --light-bg: #ffffff;
+      --light-text: #0f172a;
+      --light-muted: #475569;
+      --light-line: rgba(15, 23, 42, 0.10);
+
+      --accent: #3b82f6;     /* premium blue */
+      --accent-2: #22c55e;   /* gentle green */
+      --gold: #f59e0b;       /* warm highlight */
+
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,0.22);
+      --shadow-soft: 0 14px 40px rgba(0,0,0,0.12);
+
+      --max: 1120px;
+    }
+
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Work Sans', sans-serif;
-      background-color: #fff;
-      color: #333;
-      line-height: 1.6;
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--light-bg);
+      color: var(--light-text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+
+    /* =========================
+       Layout Helpers
+    ========================= */
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .pill{
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--light-line);
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #0f172a;
+    }
+    .badge-dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.18);
     }
 
-    .hero {
-      background-image: url('hero.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 100vh;
-      color: white;
+    /* =========================
+       Top Nav (Premium)
+    ========================= */
+    .topbar{
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      padding: 14px 0;
+      transition: all 0.25s ease;
+    }
+    .topbar.scrolled{
+      padding: 10px 0;
+    }
+    .navwrap{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(15, 23, 42, 0.60);
+      color: rgba(255,255,255,0.92);
+      border-radius: 999px;
+      padding: 10px 14px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.20);
+    }
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+    }
+    .brand-mark{
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.85), rgba(34,197,94,0.55));
+      box-shadow: 0 12px 30px rgba(59,130,246,0.22);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .brand-name{
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      line-height: 1.1;
+    }
+    .brand-name strong{
+      font-family: Fraunces, serif;
+      font-size: 1.02rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-name span{
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.70);
+    }
+
+    .nav-actions{
+      display: flex;
       align-items: center;
-      text-align: center;
-      position: relative;
+      gap: 10px;
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: 0;
+    .logo-links{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .logo-links img{
+      height: 30px;
+      width: auto;
+      opacity: 0.92;
+      transition: transform .18s ease, opacity .18s ease;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.25));
+    }
+    .logo-links img:hover{
+      transform: translateY(-2px) scale(1.03);
+      opacity: 1;
     }
 
-    .hero h1, .hero p {
-      z-index: 1;
-      position: relative;
-    }
-
-    .hero h1 {
-      font-size: 3.5rem;
-      font-family: 'Playfair Display', serif;
+    .btn{
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.92);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
       font-weight: 700;
+      letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.26);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(59,130,246,0.95), rgba(34,197,94,0.85));
+      border-color: rgba(255,255,255,0.22);
+      box-shadow: 0 18px 45px rgba(59,130,246,0.22);
+    }
+    .btn.primary:hover{
+      transform: translateY(-2px);
+    }
+    .btn.dark{
+      background: rgba(2,6,23,0.42);
     }
 
-    .hero p {
-      font-size: 1.3rem;
+    .menu-btn{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hamburger{
+      width: 18px; height: 12px;
+      position: relative;
+    }
+    .hamburger span{
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 999px;
+      transition: transform .18s ease, top .18s ease, opacity .18s ease;
+    }
+    .hamburger span:nth-child(1){ top: 0; }
+    .hamburger span:nth-child(2){ top: 5px; }
+    .hamburger span:nth-child(3){ top: 10px; }
+
+    .dropdown{
+      position: relative;
+    }
+    .dropdown-panel{
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 0;
+      width: min(320px, 88vw);
+      background: rgba(2, 6, 23, 0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      box-shadow: 0 26px 80px rgba(0,0,0,0.45);
+      padding: 10px;
+      display: none;
+      overflow: hidden;
+    }
+    .dropdown-panel.open{
+      display: block;
+      animation: pop .18s ease-out;
+    }
+    @keyframes pop{
+      from { transform: translateY(-6px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    .navgrid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .navlink{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.90);
+      border: 1px solid transparent;
+      background: rgba(255,255,255,0.06);
+      transition: background .18s ease, transform .18s ease, border-color .18s ease;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      font-size: 0.95rem;
+    }
+    .navlink:hover{
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.14);
+      transform: translateY(-1px);
+    }
+    .navicon{
+      width: 30px; height: 30px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.10);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: rgba(255,255,255,0.92);
+    }
+
+    /* =========================
+       Hero (Premium)
+    ========================= */
+    .hero{
+      min-height: 100vh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 120px 0 70px;
+      color: white;
+      background:
+        radial-gradient(1200px 600px at 60% 40%, rgba(59,130,246,0.28), transparent 60%),
+        radial-gradient(900px 500px at 30% 70%, rgba(34,197,94,0.18), transparent 60%),
+        linear-gradient(180deg, rgba(2,6,23,0.75), rgba(2,6,23,0.62)),
+        url('hero.jpg') center/cover no-repeat;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(2,6,23,0.55), rgba(2,6,23,0.85));
+      pointer-events:none;
+    }
+    .hero-inner{
+      position: relative;
+      z-index: 2;
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .hero h1{
+      font-family: Fraunces, serif;
+      font-size: clamp(2.4rem, 4.2vw, 4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin: 14px 0 10px;
+      text-shadow: 0 18px 60px rgba(0,0,0,0.45);
+    }
+    .hero p{
+      color: rgba(255,255,255,0.86);
+      font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+      max-width: 60ch;
+      margin-bottom: 22px;
+    }
+    .hero-cta{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
       margin-top: 10px;
     }
-
-    .nav-bar {
+    .hero-card{
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.10);
+      border-radius: 22px;
+      padding: 18px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+    }
+    .hero-card h3{
+      font-family: Fraunces, serif;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .hero-card .meta{
+      color: rgba(255,255,255,0.82);
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+    .meta strong{
+      color: rgba(255,255,255,0.95);
+    }
+    .tiny{
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: white;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .tiny .chip{
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 650;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.88);
     }
 
-    .dropdown {
+    /* =========================
+       Sections (Premium)
+    ========================= */
+    .main{
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+    }
+
+    .section{
+      padding: 84px 0;
       position: relative;
     }
-
-    .dropdown-btn {
-      background: none;
-      border: none;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
+    .section.alt{
+      background: linear-gradient(180deg, #f8fafc, #ffffff);
+    }
+    .section::before{
+      content:"";
+      position:absolute;
+      top:0; left:0; right:0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(15,23,42,0.08), transparent);
     }
 
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: white;
-      z-index: 1000;
-      border-radius: 5px;
-      overflow: hidden;
-      min-width: 150px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .dropdown:hover .dropdown-content,
-    .dropdown-content:hover {
-      display: block;
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 0.75rem 1rem;
-      color: #333;
-      text-decoration: none;
-      transition: background 0.2s ease;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #f0f0f0;
-    }
-
-    .logo-links {
-      display: flex;
-      gap: 1.5rem;
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
       align-items: center;
     }
 
-    .logo-links img {
-      height: 40px;
-      width: auto;
-      vertical-align: middle;
-      transition: transform 0.2s ease;
-    }
-
-    .logo-links img:hover {
-      transform: scale(1.05);
-    }
-
-    section {
-      padding: 4rem 2rem;
+    .kicker{
       display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: var(--light-muted);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      font-size: 0.95rem;
+    }
+    .kicker .line{
+      height: 1px;
+      width: 42px;
+      background: rgba(15,23,42,0.18);
+    }
+
+    .section h2{
+      font-family: Fraunces, serif;
+      font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      margin-bottom: 14px;
+      color: #0f172a;
+    }
+    .section p{
+      color: #334155;
+      font-size: 1.02rem;
+      max-width: 62ch;
+    }
+
+    .card{
+      border: 1px solid rgba(15,23,42,0.10);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 26px 70px rgba(0,0,0,0.14);
+    }
+    .card img{
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      display: block;
+    }
+    .card .card-pad{
+      padding: 18px 18px 16px;
+    }
+    .card .cap{
+      color: #64748b;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+    }
+
+    .cta-row{
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn-light{
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: 750;
+      border: 1px solid rgba(15,23,42,0.12);
+      background: white;
+      color: #0f172a;
+      box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn-light:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.12);
+    }
+    .btn-accent{
+      background: linear-gradient(135deg, rgba(59,130,246,0.98), rgba(34,197,94,0.88));
+      color: white;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+
+    .socials{
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+      align-items: center;
+    }
+    .socials a{
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 3rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 12px 30px rgba(15,23,42,0.08);
+      transition: transform .18s ease;
+      text-decoration: none;
+    }
+    .socials a:hover{ transform: translateY(-3px); }
+    .socials img{ width: 22px; height: 22px; }
+
+    /* =========================
+       Footer (Premium)
+    ========================= */
+    footer{
+      background: #0b1220;
+      color: rgba(255,255,255,0.86);
+      padding: 56px 0 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before{
+      content:"";
+      position:absolute;
+      inset:-200px -200px auto -200px;
+      height: 380px;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.22), transparent 60%),
+                  radial-gradient(circle at 70% 30%, rgba(34,197,94,0.16), transparent 60%);
+      pointer-events:none;
+    }
+    .footer-grid{
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 26px;
+      align-items: start;
+    }
+    .footer-title{
+      font-family: Fraunces, serif;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: rgba(255,255,255,0.92);
+    }
+    .footer p, .footer a{
+      color: rgba(255,255,255,0.74);
+      font-size: 0.98rem;
+      text-decoration: none;
+    }
+    .footer a:hover{
+      color: rgba(255,255,255,0.92);
+      text-decoration: underline;
+    }
+    .footer-links{
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .footer-bottom{
+      position: relative;
+      z-index: 2;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      color: rgba(255,255,255,0.62);
+      font-size: 0.92rem;
     }
 
-    section:nth-of-type(even) {
-      flex-direction: row-reverse;
-      background-color: #f7f7f7;
+    /* =========================
+       Reveal Animations
+    ========================= */
+    .reveal{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.show{
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    .section-text {
-      max-width: 500px;
-    }
-
-    .section-text h2 {
-      font-family: 'Crimson Text', serif;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .section-text p {
-      font-size: 1rem;
-    }
-
-    .section-img img {
-      max-width: 400px;
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background-color: #222;
-      color: white;
-      font-size: 0.9rem;
-    }
-
-    .socials a {
-      margin: 0 10px;
-      display: inline-block;
-    }
-
-    .socials img {
-      width: 24px;
-      height: 24px;
-      vertical-align: middle;
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        height: 60vh;
-        padding: 1rem;
+    /* =========================
+       Responsive
+    ========================= */
+    @media (max-width: 980px){
+      .hero-inner{
+        grid-template-columns: 1fr;
       }
-      .hero h1 {
-        font-size: 2rem;
+      .brand{ min-width: auto; }
+      .footer-grid{
+        grid-template-columns: 1fr;
       }
-      .hero p {
-        font-size: 1rem;
+    }
+    @media (max-width: 760px){
+      .navwrap{
+        border-radius: 22px;
+        padding: 10px 12px;
       }
-      section {
-        flex-direction: column !important;
-        text-align: center;
-        padding: 2rem 1rem;
+      .brand-name span{ display: none; }
+      .logo-links{ display: none; }
+      .grid{
+        grid-template-columns: 1fr;
       }
-      .section-img img {
-        width: 100%;
-        max-width: 90vw;
-        height: auto;
-        margin-bottom: 1rem;
-      }
-      .section-text {
-        max-width: 100%;
-      }
-      .nav-bar {
-        flex-direction: column;
-        gap: 1rem;
+      .card img{ height: 260px; }
+      .section{
+        padding: 64px 0;
       }
     }
   </style>
 </head>
+
 <body>
-  
-  <div class="hero">
-    <h1>Pilgrim Christian Church</h1>
-    <p>A partnership of the United Church of Christ and the Christian Church (Disciples of Christ)</p>
-  </div>
 
-  <div class="nav-bar">
-    <div class="dropdown">
-      <button class="dropdown-btn">Menu ☰</button>
-      <div class="dropdown-content">
-        <a href="index.html">Home</a>
-        <a href="food-pantry.html">Food Pantry</a>
-        <a href="peacecrane.html">Peace Crane Ministry</a>
-        <a href="music.html">Music Ministry</a>
-        <a href="childrens.html">Children’s Education</a>
-        <a href="volunteers.html">Worship Volunteers</a>
-        <a href="outreach.html">Community Outreach</a>
-        <a href="missions.html">Missions Ministry</a>
-        <a href="summer.html">Summer Worship Series</a>
-        <a href="giving.html">Giving</a>
-        <a href="contact.html">Contact</a>
+  <!-- Top Premium Nav -->
+  <div class="topbar" id="topbar">
+    <div class="container">
+      <div class="navwrap">
+        <div class="brand">
+          <div class="brand-mark">P</div>
+          <div class="brand-name">
+            <strong>Pilgrim Christian Church</strong>
+            <span>United Church of Christ + Disciples of Christ</span>
+          </div>
+        </div>
+
+        <div class="nav-actions">
+          <div class="dropdown">
+            <button class="btn dark menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel">
+              <span class="hamburger" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
+              Menu
+            </button>
+
+            <div class="dropdown-panel" id="menuPanel" role="menu" aria-label="Site menu">
+              <div class="navgrid">
+                <a class="navlink" href="index.html"><span class="navicon">🏠</span>Home</a>
+                <a class="navlink" href="contact.html"><span class="navicon">📍</span>Contact</a>
+                <a class="navlink" href="giving.html"><span class="navicon">💛</span>Giving</a>
+                <a class="navlink" href="summer.html"><span class="navicon">☀️</span>Summer Series</a>
+
+                <a class="navlink" href="food-pantry.html"><span class="navicon">🥫</span>Food Pantry</a>
+                <a class="navlink" href="peacecrane.html"><span class="navicon">🕊️</span>Peace Cranes</a>
+                <a class="navlink" href="music.html"><span class="navicon">🎵</span>Music</a>
+                <a class="navlink" href="childrens.html"><span class="navicon">📚</span>Children’s</a>
+
+                <a class="navlink" href="volunteers.html"><span class="navicon">🙌</span>Volunteers</a>
+                <a class="navlink" href="outreach.html"><span class="navicon">🤝</span>Outreach</a>
+                <a class="navlink" href="missions.html"><span class="navicon">🌍</span>Missions</a>
+                <a class="navlink" href="#worship"><span class="navicon">⛪</span>Worship</a>
+              </div>
+            </div>
+          </div>
+
+          <a class="btn primary" href="contact.html">Plan a Visit</a>
+
+          <div class="logo-links">
+            <a href="https://www.ucc.org/" target="_blank" rel="noopener">
+              <img src="ucc-icon.jpg" alt="United Church of Christ">
+            </a>
+            <a href="https://disciples.org/" target="_blank" rel="noopener">
+              <img src="doc-icon.png" alt="Christian Church (Disciples of Christ)">
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="logo-links">
-      <a href="https://www.ucc.org/" target="_blank">
-        <img src="ucc-icon.jpg" alt="UCC Logo">
-      </a>
-      <a href="https://disciples.org/" target="_blank">
-        <img src="doc-icon.png" alt="DoC Logo">
-      </a>
-    </div>
   </div>
 
-  <section id="ouridentity">
-    <div class="section-text">
-      <h2>Our Identity</h2>
-      <p>We are disciples of Christ, a movement for wholeness in a fragmented world.<br><br>
-      United in Spirit and inspired by God's grace, we welcome all, love all, and seek justice for all.<br><br>
-      May the peace of God be with you.</p>
-    </div>
-    <div class="section-img">
-      <img src="cross.jpg" alt="Identity Image">
-    </div>
-  </section>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="reveal">
+        <div class="pill"><span class="badge-dot"></span> Sundays at 10:00 AM • Chardon, Ohio</div>
 
-  <section id="worship">
-    <div class="section-text">
-      <h2>Worship With Us</h2>
-      <p><strong>Address:</strong> 202 S Hambden St, Chardon, OH 44024<br>
-      <strong>When:</strong> Sundays at 10:00 AM</p>
+        <h1>A welcoming church family in the heart of Chardon.</h1>
+        <p>
+          Pilgrim Christian Church is a partnership of the United Church of Christ and the Christian Church (Disciples of Christ).
+          Whether you’re new to faith, returning, or just exploring — you belong here.
+        </p>
 
-      <h3 style="margin-top: 2rem; text-align: center;">Online Worship Streams</h3>
-      <div class="socials" style="text-align: center; margin-top: 1rem;">
-        <a href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank">
-          <img src="facebook1.png" alt="Facebook" style="width: 30px; height: 30px; margin: 0 10px;">
-        </a>
-        <a href="https://www.youtube.com/@pcc_chardon/streams" target="_blank">
-          <img src="youtube1.png" alt="YouTube" style="width: 30px; height: 30px; margin: 0 10px;">
-        </a>
+        <div class="hero-cta">
+          <a class="btn primary" href="#worship">Service Info</a>
+          <a class="btn" href="giving.html">Give</a>
+          <a class="btn" href="https://www.youtube.com/@pcc_chardon/streams" target="_blank" rel="noopener">Watch Online</a>
+        </div>
+      </div>
+
+      <div class="hero-card reveal">
+        <h3>Worship With Us</h3>
+        <div class="meta">
+          <div><strong>When:</strong> Sundays at 10:00 AM</div>
+          <div><strong>Where:</strong> 202 S Hambden St, Chardon, OH 44024</div>
+        </div>
+
+        <div class="tiny">
+          <span class="chip">All are welcome</span>
+          <span class="chip">Community outreach</span>
+          <span class="chip">Worship + service</span>
+        </div>
+
+        <div class="socials" style="margin-top:14px;">
+          <a href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank" rel="noopener" aria-label="Facebook">
+            <img src="facebook1.png" alt="Facebook">
+          </a>
+          <a href="https://www.youtube.com/@pcc_chardon/streams" target="_blank" rel="noopener" aria-label="YouTube">
+            <img src="youtube1.png" alt="YouTube">
+          </a>
+        </div>
       </div>
     </div>
-    <div class="section-img">
-      <img src="visit.jpg" alt="Visit Image">
-    </div>
-  </section>
+  </header>
 
-  <section id="ourhistory">
-    <div class="section-text">
-      <h2>Our History</h2>
-      <p>In 1948, Pilgrim Christian Church was formed through the union of the Chardon Congregational Church and the Chardon Christian Church. In 1950, the congregation voted to adopt the name “Pilgrim.” Since then, we’ve grown into a dynamic, inclusive church with dual affiliation in the United Church of Christ and the Disciples of Christ.<br><br>
-      Our ministries flourished in the 50s, 60s, and 70s with strong fellowship programs, youth camps, and pancake breakfasts. In 1982, our Memorial Parlor was added, and today we continue to serve the Chardon community through outreach, worship, and a commitment to love and justice.</p>
-    </div>
-    <div class="section-img">
-      <img src="church-history.jpg" alt="Historic Church Building">
-    </div>
-  </section>
+  <main class="main">
 
-  <footer>
-    <p>&copy; 2025 Pilgrim Christian Church</p>
-    <div class="socials" style="margin-top: 1rem; text-align: center;">
-      <a href="https://www.instagram.com/pcc_chardon/" target="_blank" style="text-decoration: none;">
-        <img src="instagram-icon.png" alt="Instagram" style="width: 25px; height: 25px; margin: 0 10px;">
-      </a>
-      <a href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank" style="text-decoration: none;">
-        <img src="facebook-icon.png" alt="Facebook" style="width: 25px; height: 25px; margin: 0 10px;">
-      </a>
-      <a href="https://www.youtube.com/@pcc_chardon/streams" target="_blank" style="text-decoration: none;">
-        <img src="youtube-icon.png" alt="YouTube" style="width: 25px; height: 25px; margin: 0 10px;">
-      </a>
-    </div>
+    <!-- Our Identity -->
+    <section class="section alt" id="ouridentity">
+      <div class="container grid">
+        <div class="reveal">
+          <div class="kicker"><span class="line"></span> Our Identity</div>
+          <h2>Wholeness, welcome, and justice — lived out together.</h2>
+          <p>
+            We are disciples of Christ, a movement for wholeness in a fragmented world.
+            <br><br>
+            United in Spirit and inspired by God's grace, we welcome all, love all, and seek justice for all.
+            <br><br>
+            May the peace of God be with you.
+          </p>
 
-    <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem;">
-      <a href="https://www.ucc.org/" target="_blank" style="text-decoration: none;">
-        <img src="ucc-icon2.png" alt="UCC Logo" style="height: 40px;">
-      </a>
-      <a href="https://disciples.org/" target="_blank" style="text-decoration: none;">
-        <img src="doc-icon.png" alt="DoC Logo" style="height: 40px;">
-      </a>
+          <div class="cta-row">
+            <a class="btn-light btn-accent" href="contact.html">Meet Us</a>
+            <a class="btn-light" href="missions.html">Our Mission</a>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <img src="cross.jpg" alt="Cross at sunrise">
+          <div class="card-pad">
+            <div class="cap">Faith that’s warm, real, and welcoming.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Worship -->
+    <section class="section" id="worship">
+      <div class="container grid">
+        <div class="card reveal">
+          <img src="visit.jpg" alt="Pilgrim Christian Church building">
+          <div class="card-pad">
+            <div class="cap">Join us this Sunday — we’d love to see you.</div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="kicker"><span class="line"></span> Worship</div>
+          <h2>Simple service details. A meaningful Sunday.</h2>
+          <p>
+            <strong>Address:</strong> 202 S Hambden St, Chardon, OH 44024
+            <br>
+            <strong>When:</strong> Sundays at 10:00 AM
+            <br><br>
+            Prefer online? We stream services so you can join from anywhere.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn-light btn-accent" href="contact.html">Plan Your Visit</a>
+            <a class="btn-light" href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank" rel="noopener">Watch on Facebook</a>
+            <a class="btn-light" href="https://www.youtube.com/@pcc_chardon/streams" target="_blank" rel="noopener">Watch on YouTube</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="section alt" id="ourhistory">
+      <div class="container grid">
+        <div class="reveal">
+          <div class="kicker"><span class="line"></span> Our History</div>
+          <h2>Rooted in Chardon since 1948.</h2>
+          <p>
+            In 1948, Pilgrim Christian Church was formed through the union of the Chardon Congregational Church and the Chardon Christian Church.
+            In 1950, the congregation voted to adopt the name “Pilgrim.” Since then, we’ve grown into a dynamic, inclusive church with dual affiliation
+            in the United Church of Christ and the Disciples of Christ.
+            <br><br>
+            Our ministries flourished in the 50s, 60s, and 70s with strong fellowship programs, youth camps, and pancake breakfasts.
+            In 1982, our Memorial Parlor was added, and today we continue to serve the Chardon community through outreach, worship, and a commitment
+            to love and justice.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn-light btn-accent" href="outreach.html">Serve With Us</a>
+            <a class="btn-light" href="food-pantry.html">Food Pantry</a>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <img src="church-history.jpg" alt="Historic church photo">
+          <div class="card-pad">
+            <div class="cap">A legacy of faith, fellowship, and service.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">Pilgrim Christian Church</div>
+          <p>
+            A partnership of the United Church of Christ and the Christian Church (Disciples of Christ).
+            <br><br>
+            Serving Chardon with faith, hope, and love.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-title">Quick Links</div>
+          <div class="footer-links">
+            <a href="contact.html">Contact</a>
+            <a href="giving.html">Giving</a>
+            <a href="missions.html">Missions</a>
+            <a href="outreach.html">Community Outreach</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-title">Worship Online</div>
+          <div class="footer-links">
+            <a href="https://www.facebook.com/PilgrimChristianChurch/videos" target="_blank" rel="noopener">Facebook Videos</a>
+            <a href="https://www.youtube.com/@pcc_chardon/streams" target="_blank" rel="noopener">YouTube Streams</a>
+            <div style="display:flex; gap:14px; align-items:center; margin-top: 14px;">
+              <a href="https://www.ucc.org/" target="_blank" rel="noopener">
+                <img src="ucc-icon2.png" alt="UCC Logo" style="height:38px; opacity:.9;">
+              </a>
+              <a href="https://disciples.org/" target="_blank" rel="noopener">
+                <img src="doc-icon.png" alt="DoC Logo" style="height:38px; opacity:.9;">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2025 Pilgrim Christian Church</span>
+        <span>Built with love in Chardon, OH</span>
+      </div>
     </div>
   </footer>
+
+  <script>
+    // Sticky nav shrink on scroll
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 18) topbar.classList.add('scrolled');
+      else topbar.classList.remove('scrolled');
+    });
+
+    // Dropdown open/close (click-based, mobile-friendly)
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPanel = document.getElementById('menuPanel');
+
+    function closeMenu(){
+      menuPanel.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = menuPanel.classList.contains('open');
+      if (isOpen) closeMenu();
+      else {
+        menuPanel.classList.add('open');
+        menuBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.addEventListener('click', () => closeMenu());
+    menuPanel.addEventListener('click', (e) => e.stopPropagation());
+
+    // Reveal on scroll (premium polish, no library)
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
